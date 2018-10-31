@@ -3,8 +3,17 @@
 
 for i in * ; do
   if [ -d "$i" ]; then
+  	echo "building $i"
     cd "$i"
-    zip -r --filesync ../$i.zip * -x "*.DS_Store" -x ".git*" -x "__MAC*"
+    if [ -f "manifest.php" ]
+    then
+      zip -r --filesync ../$i.zip * -x "*.DS_Store" -x ".git*" -x "__MAC*"      
+   else
+     if [ -f "pack.php" ]
+     then
+       php pack.php "1.0.0"
+     fi
+    fi
     cd ..
   fi
 done
